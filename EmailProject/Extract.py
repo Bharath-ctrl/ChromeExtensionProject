@@ -7,8 +7,8 @@ import numpy as np
 
 # file=pd.DataFrame([[],[],[]],columns=['Sender','Subject','BodyContent'])
 # file.to_csv("extractreport.csv",mode='a',index=False, header=False)
-EMAIL = '1ep18cs017.cse@eastpoint.ac.in'
-PASSWORD = 'charlie_X95'
+EMAIL =   input("Enter Email Id: ")              #'1ep18cs017.cse@eastpoint.ac.in'
+PASSWORD = input("Enter Password: ")                                         #'charlie_X95'
 SERVER = 'imap.gmail.com'
 
 # connect to the server and go to its inbox
@@ -106,6 +106,7 @@ for block in data:
                 }
 
                 file=pd.DataFrame(newdata)
-                file.to_csv("extractreport.csv",mode='a',index=False, header=False)
+                first5=file.head(5)
+                first5.to_csv("extractreportnew11.csv",mode='a',index=False, header=False)
 print("Data added")
     #////////////

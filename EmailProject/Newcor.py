@@ -29,12 +29,12 @@ class User(db.Model):
   id=db.Column(db.Integer,primary_key=True)
   sender=db.Column(db.Text)
   subject=db.Column(db.Text)
-  content=db.Column(db.Text)
+ # content=db.Column(db.Text)
 
-  def __init__(self,sender,subject,content):
-    self.sender=[sender]
-    self.subject=[subject]
-    self.content=[content]
+  def __init__(self,sender,subject):
+    self.sender=sender
+    self.subject=subject
+    #self.content=[content]
 
 class UserSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
@@ -131,13 +131,13 @@ def extract():
                 #                 #     with connection.cursor() as cursor:
                 #                 #         cursor.execute(" INSERT INTO user(SENDER,SUBJECT,BODYCONTENT) VALUES(%s,%s,%s);",(getFrom,getSub,getContent))
 
-                store = User(getFrom, getSub, getContent)
-                db.session.add(store)
+                store = User(getFrom, getSub)
+                db.session.add((store))
                 db.session.commit()
                 box = []
                 inbox = {}
                 for result in store:
-                    inbox = {'Sender': result['SENDER'], 'Subject': ['SUBJECT'],'BODY_CONTENT':['BODYCONTENT']}
+                    inbox = {'Sender': result['SENDER'], 'Subject': ['SUBJECT']}
                     box.append(inbox)
                     inbox = {}
                 return jsonify(box)

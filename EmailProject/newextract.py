@@ -1,13 +1,30 @@
-from flask import Flask,jsonify
+from flask import Flask,jsonify, request
 import email
 import imaplib
+# import requests, sqlite3
+
+# connection=sqlite3.connect("Project.db",check_same_thread=False)
+# listofTabs = connection.execute("select name from sqlite_master where type='table' AND name='user'").fetchall()
+
+# if listofTabs!=[]:
+#     print("Table exist already")
+# else:
+#     connection.execute('''create table user(
+#                              ID integer primary key autoincrement,
+#                              dbbody text,
+#                              dbsubject text,
+#                              dbhtmlbody text,
+#                              dblinks text
+#                              )''')
+#     print("Table Created Successfully")
+# cur = connection.cursor()
 
 global UN,PW,host
 UN='1ep18cs017.cse@eastpoint.ac.in'
 PW='charlie_X95'
 host='imap.gmail.com' 
 appFlask = Flask(__name__)
-@appFlask.route('/')
+@appFlask.route('/all')
 def get_inbox():
     mail = imaplib.IMAP4_SSL(host)
     mail.login(UN, PW)
@@ -60,6 +77,17 @@ def unread():
         my_message.append(email_data)
         #print(my_message)
     return jsonify(my_message)
+    # apiformat= jsonify(my_message)
+    # d = request.get("http://127.0.0.1:5000/unread")
+    # d = d.json()
+    # componentrs = d["body"]["from"]["html_body"]["subject"]
+    # for dr in componentrs:
+    #     name = dr["familyName"]
+    #     number = dr["permanentNumber"]
+    #     prod={}
+    #     newinsert=cur.execute('''INSERT INTO user(dbbody,dbsubject,dbhtmlbody) VALUES(body,subject,html_body)''')    
+    #     val = (name,number)
+    #     cur.execute(sql,val)
 
 
 if __name__ == "__main__":
